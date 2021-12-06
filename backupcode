@@ -1,0 +1,32 @@
+void SolitaireBoard::printBoard() {
+    for (int i=0; i<7; i++) {
+        std::cout << std::setw(10) << std::left << "Pile " + std::to_string(i+1) + ":";
+    } 
+    std::cout << std::endl;
+    Card *p[8] = {(*piles[1]).cardsInPile(), (*piles[2]).cardsInPile(), (*piles[3]).cardsInPile(), 
+                  (*piles[4]).cardsInPile(), (*piles[5]).cardsInPile(), (*piles[6]).cardsInPile(), 
+                  (*piles[7]).cardsInPile(), (*piles[0]).cardsInPile() };
+
+    char suite, value;
+    for (int i=0; i<52; i++) {
+        for (int j=1; j<8; j++) {
+            suite = (*(p[j]+i)).returnSuite();
+            value = (*(p[j]+i)).returnValue();
+            std::cout << std::setw(10) << std::left << std::string() + suite + value;
+        }
+        std::cout << std::endl;
+    }
+}
+
+Card *DeckLinkedList::cardsInPile() {
+    DeckLinkedList* ptr = this;
+    static Card cardsInPile[52];
+    int counter=0;
+    while (ptr->nextCard != nullptr) {
+        *(cardsInPile+counter) = ptr->currentCard;
+        ptr = ptr->nextCard;
+        counter++;
+    }
+    *(cardsInPile+counter) = ptr->currentCard;
+    return cardsInPile;
+}
